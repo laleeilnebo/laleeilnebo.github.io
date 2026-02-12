@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.8;
+    background: #ffffff;
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
+                url('images/couple-photo.jpg') center/cover no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.hero-overlay {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(2px);
+}
+
+.hero-content {
+    text-align: center;
+    color: white;
+    animation: fadeIn 2s ease-out;
+}
+
+.couple-names {
+    font-size: 6rem;
+    font-weight: 200;
+    letter-spacing: 1rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.wedding-date {
+    font-size: 1.5rem;
+    font-weight: 300;
+    letter-spacing: 0.5rem;
+    margin-bottom: 4rem;
+    text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-indicator {
+    margin-top: 4rem;
+    opacity: 0.85;
+    animation: bounce 2.5s infinite ease-in-out;
+}
+
+.scroll-indicator p {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+}
+
+.arrow {
+    font-size: 1.5rem;
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Info Sections */
+.info-section {
+    padding: 8rem 2rem;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.church-section {
+    background: #fafafa;
+}
+
+.dinner-section {
+    background: #ffffff;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+}
+
+.section-icon {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.6;
+}
+
+.info-section h2 {
+    font-size: 2.5rem;
+    font-weight: 200;
+    margin-bottom: 4rem;
+    letter-spacing: 0.3rem;
+    color: #1a1a1a;
+    text-transform: uppercase;
+}
+
+.info-content {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+}
+
+.info-content h3 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: #1a1a1a;
+    font-weight: 300;
+}
+
+.time {
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    font-weight: 300;
+    margin: 2rem 0;
+    letter-spacing: 0.1rem;
+}
+
+.address {
+    font-size: 1rem;
+    color: #666;
+    margin: 2rem 0;
+    line-height: 2;
+    font-weight: 300;
+}
+
+.map-placeholder {
+    margin-top: 3rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.map-placeholder:hover {
+    border-color: #1a1a1a;
+    background: transparent;
+}
+
+.map-placeholder p {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+}
+
+/* Footer */
+footer {
+    background: #1a1a1a;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 3rem 2rem;
+    font-size: 0.95rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .couple-names {
+        font-size: 3rem;
+        letter-spacing: 0.5rem;
+    }
+
+    .wedding-date {
+        font-size: 1.2rem;
+        letter-spacing: 0.3rem;
+    }
+
+    .info-section {
+        padding: 5rem 1.5rem;
+    }
+
+    .info-section h2 {
+        font-size: 1.8rem;
+        letter-spacing: 0.2rem;
+        margin-bottom: 3rem;
+    }
+
+    .info-content h3 {
+        font-size: 1.4rem;
+    }
+
+    .time {
+        font-size: 1.1rem;
+    }
+
+    .address {
+        font-size: 0.95rem;
+    }
+
+    .section-icon {
+        font-size: 2rem;
+    }
+
+    .scroll-indicator p {
+        font-size: 0.75rem;
+    }
+}
