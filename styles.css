@@ -47,14 +47,21 @@ body {
     font-size: 6rem;
     font-weight: 200;
     letter-spacing: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
 }
 
+.divider {
+    width: 80px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.8);
+    margin: 2.5rem auto;
+}
+
 .wedding-date {
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 200;
+    letter-spacing: 0.6rem;
     margin-bottom: 4rem;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
 }
@@ -65,16 +72,10 @@ body {
     animation: bounce 2.5s infinite ease-in-out;
 }
 
-.scroll-indicator p {
-    font-size: 0.85rem;
-    margin-bottom: 0.5rem;
-    font-weight: 300;
-    letter-spacing: 0.1rem;
-}
-
 .arrow {
-    font-size: 1.5rem;
+    font-size: 2rem;
     display: block;
+    font-weight: 200;
 }
 
 @keyframes fadeIn {
@@ -136,6 +137,19 @@ body {
     letter-spacing: 0.3rem;
     color: #1a1a1a;
     text-transform: uppercase;
+    position: relative;
+    padding-bottom: 2rem;
+}
+
+.info-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: #1a1a1a;
 }
 
 .info-content {
@@ -205,12 +219,17 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .couple-names {
-        font-size: 3rem;
-        letter-spacing: 0.5rem;
+        font-size: 2.5rem;
+        letter-spacing: 0.4rem;
+    }
+
+    .divider {
+        width: 60px;
+        margin: 1.5rem auto;
     }
 
     .wedding-date {
-        font-size: 1.2rem;
+        font-size: 1rem;
         letter-spacing: 0.3rem;
     }
 
@@ -222,6 +241,11 @@ footer {
         font-size: 1.8rem;
         letter-spacing: 0.2rem;
         margin-bottom: 3rem;
+        padding-bottom: 1.5rem;
+    }
+
+    .info-section h2::after {
+        width: 40px;
     }
 
     .info-content h3 {
@@ -240,7 +264,7 @@ footer {
         font-size: 2rem;
     }
 
-    .scroll-indicator p {
-        font-size: 0.75rem;
+    .arrow {
+        font-size: 1.5rem;
     }
 }
