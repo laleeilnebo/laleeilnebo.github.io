@@ -62,11 +62,42 @@
         </div>
     </section>
 
+    <!-- RSVP Section -->
+    <section class="info-section rsvp-section">
+        <div class="container">
+            <h2>Conferma Presenza</h2>
+            <div class="info-content">
+                <div class="rsvp-form">
+                    <!-- Search Form -->
+                    <div class="search-container">
+                        <input type="text" id="guestSearch" class="guest-input" placeholder="Cerca il tuo nome...">
+                        <button id="searchBtn" class="rsvp-btn">Cerca</button>
+                    </div>
+
+                    <!-- Loading Indicator -->
+                    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+                        <p>Caricamento...</p>
+                    </div>
+
+                    <!-- Guest Group Results -->
+                    <div id="guestGroup" class="guest-group" style="display: none;">
+                        <h3 id="groupName" class="group-name"></h3>
+                        <div id="guestList" class="guest-list"></div>
+                        <button id="confirmBtn" class="rsvp-btn confirm-btn">Conferma</button>
+                    </div>
+
+                    <!-- Success/Error Messages -->
+                    <div id="messageBox" class="message-box" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <p>Non vediamo l'ora di condividere questo giorno speciale con voi!</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>

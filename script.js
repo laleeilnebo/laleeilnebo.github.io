@@ -1,3 +1,5 @@
+console.log('=== Script.js is loading ===');
+
 // Fix for iOS Safari viewport height with address bar
 function setViewportHeight() {
     const vh = window.innerHeight * 0.01;
@@ -6,13 +8,16 @@ function setViewportHeight() {
 
 // Set on load
 setViewportHeight();
+console.log('Viewport height set');
 
 // Update on resize and orientation change
 window.addEventListener('resize', setViewportHeight);
 window.addEventListener('orientationchange', setViewportHeight);
 
 // Smooth scroll effect for scroll indicator
+console.log('Adding DOMContentLoaded listener...');
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('=== DOM Content Loaded - Starting initialization ===');
     const scrollIndicator = document.querySelector('.scroll-indicator');
 
     if (scrollIndicator) {
@@ -44,4 +49,272 @@ document.addEventListener('DOMContentLoaded', function() {
         section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
         observer.observe(section);
     });
+
+    // RSVP Form Functionality
+    initRSVPForm();
 });
+
+// RSVP Form Functions
+function initRSVPForm() {
+    console.log('=== RSVP Form Initialization Started ===');
+
+    // Replace with your Google Apps Script Web App URL
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwjsrgoLfBn4QUVng6m9e-GiBZEs33RWWszHvr75p0Yg_hfl1d-2o8jZB-PtVtYZVUEyg/exec';
+
+    const searchBtn = document.getElementById('searchBtn');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const guestSearch = document.getElementById('guestSearch');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const guestGroup = document.getElementById('guestGroup');
+    const messageBox = document.getElementById('messageBox');
+
+    console.log('Form elements found:', {
+        searchBtn: searchBtn ? 'YES' : 'NO',
+        confirmBtn: confirmBtn ? 'YES' : 'NO',
+        guestSearch: guestSearch ? 'YES' : 'NO',
+        loadingIndicator: loadingIndicator ? 'YES' : 'NO',
+        guestGroup: guestGroup ? 'YES' : 'NO',
+        messageBox: messageBox ? 'YES' : 'NO'
+    });
+
+    if (!searchBtn) {
+        console.error('ERROR: Search button not found! Check if HTML has id="searchBtn"');
+        return;
+    }
+
+    if (!guestSearch) {
+        console.error('ERROR: Search input not found! Check if HTML has id="guestSearch"');
+        return;
+    }
+
+    let currentGuests = [];
+
+    // Search button click handler
+    console.log('Attaching click event to search button...');
+    searchBtn.addEventListener('click', function() {
+        console.log('=== Search button clicked! ===');
+        const searchTerm = guestSearch.value.trim();
+        console.log('Search term:', searchTerm);
+        if (!searchTerm) {
+            showMessage('Inserisci un nome per cercare', 'error');
+            return;
+        }
+        searchGuest(searchTerm);
+    });
+    console.log('Search button click event attached successfully');
+
+    // Allow Enter key to search
+    if (guestSearch) {
+        guestSearch.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                console.log('Enter key pressed in search field');
+                searchBtn.click();
+            }
+        });
+        console.log('Enter key event attached to search input');
+    }
+
+    // Confirm button click handler
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+            console.log('=== Confirm button clicked! ===');
+            confirmAttendance();
+        });
+        console.log('Confirm button click event attached');
+    }
+
+    console.log('=== RSVP Form Initialization Completed ===');
+
+    // Test button functionality - you can click this in console
+    window.testRSVP = function() {
+        console.log('Test function called');
+        console.log('Search button exists:', !!searchBtn);
+        console.log('Search button is visible:', searchBtn && searchBtn.offsetParent !== null);
+        if (searchBtn) {
+            searchBtn.click();
+        }
+    };
+    console.log('Type "testRSVP()" in console to test the button');
+
+    // Search for guest
+    function searchGuest(searchTerm) {
+        console.log('Searching for guest:', searchTerm);
+        showLoading();
+        hideMessage();
+        hideGuestGroup();
+
+        const payload = {
+            action: 'search',
+            searchTerm: searchTerm
+        };
+
+        console.log('Sending request to:', SCRIPT_URL);
+        console.log('Payload:', payload);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Raw response:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Parsed data:', data);
+                hideLoading();
+                if (data.success) {
+                    displayGuestGroup(data.data);
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                hideLoading();
+                showMessage('Errore nel formato della risposta', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            hideLoading();
+            showMessage('Errore durante la ricerca. Controlla la console per dettagli.', 'error');
+        });
+    }
+
+    // Display guest group
+    function displayGuestGroup(data) {
+        currentGuests = data.guests;
+        document.getElementById('groupName').textContent = data.groupName;
+
+        const guestList = document.getElementById('guestList');
+        guestList.innerHTML = '';
+
+        data.guests.forEach((guest, index) => {
+            const guestItem = document.createElement('div');
+            guestItem.className = 'guest-item';
+
+            const guestName = document.createElement('span');
+            guestName.className = 'guest-name';
+            guestName.textContent = guest.name;
+
+            const guestCheckbox = document.createElement('div');
+            guestCheckbox.className = 'guest-checkbox';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.id = `guest-${index}`;
+            checkbox.checked = guest.attending;
+            checkbox.dataset.row = guest.row;
+
+            const label = document.createElement('label');
+            label.htmlFor = `guest-${index}`;
+            label.textContent = 'Presente';
+
+            guestCheckbox.appendChild(checkbox);
+            guestCheckbox.appendChild(label);
+
+            guestItem.appendChild(guestName);
+            guestItem.appendChild(guestCheckbox);
+
+            guestList.appendChild(guestItem);
+        });
+
+        showGuestGroup();
+    }
+
+    // Confirm attendance
+    function confirmAttendance() {
+        const checkboxes = document.querySelectorAll('.guest-checkbox input[type="checkbox"]');
+        const guests = Array.from(checkboxes).map(cb => ({
+            row: parseInt(cb.dataset.row),
+            attending: cb.checked
+        }));
+
+        console.log('Confirming attendance for guests:', guests);
+        showLoading();
+        hideMessage();
+
+        const payload = {
+            action: 'confirm',
+            guests: guests
+        };
+
+        console.log('Sending confirmation to:', SCRIPT_URL);
+        console.log('Payload:', payload);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            console.log('Confirmation response status:', response.status);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Confirmation raw response:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Confirmation parsed data:', data);
+                hideLoading();
+                if (data.success) {
+                    showMessage(data.message, 'success');
+                    // Reset form after successful submission
+                    setTimeout(() => {
+                        hideGuestGroup();
+                        guestSearch.value = '';
+                        hideMessage();
+                    }, 3000);
+                } else {
+                    showMessage(data.message, 'error');
+                }
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                hideLoading();
+                showMessage('Errore nel formato della risposta', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            hideLoading();
+            showMessage('Errore durante la conferma. Controlla la console per dettagli.', 'error');
+        });
+    }
+
+    // UI Helper functions
+    function showLoading() {
+        loadingIndicator.style.display = 'block';
+        searchBtn.disabled = true;
+    }
+
+    function hideLoading() {
+        loadingIndicator.style.display = 'none';
+        searchBtn.disabled = false;
+    }
+
+    function showGuestGroup() {
+        guestGroup.style.display = 'block';
+    }
+
+    function hideGuestGroup() {
+        guestGroup.style.display = 'none';
+    }
+
+    function showMessage(message, type) {
+        messageBox.textContent = message;
+        messageBox.className = 'message-box ' + type;
+        messageBox.style.display = 'block';
+    }
+
+    function hideMessage() {
+        messageBox.style.display = 'none';
+    }
+}
