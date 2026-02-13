@@ -192,6 +192,7 @@ body {
 }
 
 .map-placeholder {
+    display: inline-block;
     margin-top: 3rem;
     padding: 1rem 2rem;
     background: transparent;
@@ -199,6 +200,7 @@ body {
     border-radius: 2px;
     cursor: pointer;
     transition: all 0.3s ease;
+    text-decoration: none;
 }
 
 .map-placeholder:hover {
@@ -211,6 +213,7 @@ body {
     color: #666;
     font-weight: 300;
     letter-spacing: 0.05rem;
+    margin: 0;
 }
 
 /* Footer */
