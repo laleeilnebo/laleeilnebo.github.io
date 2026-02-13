@@ -19,7 +19,8 @@ body {
 .hero {
     height: 100vh;
     background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)),
-                url('images/couple-photo.jpg') center/cover no-repeat;
+                url('./images/couple-photo.jpg') center/cover no-repeat;
+    background-color: #8b9dc3;
     background-attachment: fixed;
     display: flex;
     align-items: center;
