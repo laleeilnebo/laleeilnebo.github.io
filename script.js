@@ -52,6 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // RSVP Form Functionality
     initRSVPForm();
+
+    // Gift Form Functionality
+    initGiftForm();
 });
 
 // RSVP Form Functions
@@ -59,7 +62,7 @@ function initRSVPForm() {
     console.log('=== RSVP Form Initialization Started ===');
 
     // Replace with your Google Apps Script Web App URL
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwjsrgoLfBn4QUVng6m9e-GiBZEs33RWWszHvr75p0Yg_hfl1d-2o8jZB-PtVtYZVUEyg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0hP2njaxIA0PVL0ML86wWzc2fc0UYPfzD_z4iuewsrhMyyHg3CvsDRVozCjWy9fvMTg/exec';
 
     const searchBtn = document.getElementById('searchBtn');
     const confirmBtn = document.getElementById('confirmBtn');
@@ -317,4 +320,130 @@ function initRSVPForm() {
     function hideMessage() {
         messageBox.style.display = 'none';
     }
+}
+
+// Gift Form Functions
+function initGiftForm() {
+    console.log('=== Gift Form Initialization Started ===');
+
+    // Replace with your Google Apps Script Web App URL (same as RSVP)
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0hP2njaxIA0PVL0ML86wWzc2fc0UYPfzD_z4iuewsrhMyyHg3CvsDRVozCjWy9fvMTg/exec';
+
+    const submitGiftBtn = document.getElementById('submitGiftBtn');
+    const giftFrom = document.getElementById('giftFrom');
+    const giftMessage = document.getElementById('giftMessage');
+    const giftLoadingIndicator = document.getElementById('giftLoadingIndicator');
+    const giftMessageBox = document.getElementById('giftMessageBox');
+
+    console.log('Gift form elements found:', {
+        submitGiftBtn: submitGiftBtn ? 'YES' : 'NO',
+        giftFrom: giftFrom ? 'YES' : 'NO',
+        giftMessage: giftMessage ? 'YES' : 'NO',
+        giftLoadingIndicator: giftLoadingIndicator ? 'YES' : 'NO',
+        giftMessageBox: giftMessageBox ? 'YES' : 'NO'
+    });
+
+    if (!submitGiftBtn) {
+        console.error('ERROR: Submit gift button not found!');
+        return;
+    }
+
+    // Submit button click handler
+    submitGiftBtn.addEventListener('click', function() {
+        console.log('=== Submit gift button clicked! ===');
+        submitGiftMessage();
+    });
+
+    // Submit gift message
+    function submitGiftMessage() {
+        const from = giftFrom.value.trim();
+        const message = giftMessage.value.trim();
+
+        if (!from) {
+            showGiftMessage('Inserisci il tuo nome', 'error');
+            return;
+        }
+
+        if (!message) {
+            showGiftMessage('Inserisci un messaggio per gli sposi', 'error');
+            return;
+        }
+
+        console.log('Submitting gift message from:', from);
+        showGiftLoading();
+        hideGiftMessage();
+
+        const payload = {
+            action: 'gift',
+            from: from,
+            to: 'Lorenzo ed Alessia',
+            message: message
+        };
+
+        console.log('Sending gift message to:', SCRIPT_URL);
+        console.log('Payload:', payload);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => {
+            console.log('Gift response status:', response.status);
+            return response.text();
+        })
+        .then(text => {
+            console.log('Gift raw response:', text);
+            try {
+                const data = JSON.parse(text);
+                console.log('Gift parsed data:', data);
+                hideGiftLoading();
+                if (data.success) {
+                    showGiftMessage(data.message, 'success');
+                    // Reset form after successful submission
+                    setTimeout(() => {
+                        giftFrom.value = '';
+                        giftMessage.value = '';
+                        hideGiftMessage();
+                    }, 3000);
+                } else {
+                    showGiftMessage(data.message, 'error');
+                }
+            } catch (e) {
+                console.error('JSON parse error:', e);
+                hideGiftLoading();
+                showGiftMessage('Errore nel formato della risposta', 'error');
+            }
+        })
+        .catch(error => {
+            console.error('Fetch error:', error);
+            hideGiftLoading();
+            showGiftMessage('Errore durante l\'invio. Riprova più tardi.', 'error');
+        });
+    }
+
+    // UI Helper functions
+    function showGiftLoading() {
+        giftLoadingIndicator.style.display = 'block';
+        submitGiftBtn.disabled = true;
+    }
+
+    function hideGiftLoading() {
+        giftLoadingIndicator.style.display = 'none';
+        submitGiftBtn.disabled = false;
+    }
+
+    function showGiftMessage(message, type) {
+        giftMessageBox.textContent = message;
+        giftMessageBox.className = 'message-box ' + type;
+        giftMessageBox.style.display = 'block';
+    }
+
+    function hideGiftMessage() {
+        giftMessageBox.style.display = 'none';
+    }
+
+    console.log('=== Gift Form Initialization Completed ===');
 }

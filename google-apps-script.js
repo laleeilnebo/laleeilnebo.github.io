@@ -3,16 +3,19 @@
 
 // This function handles HTTP GET and POST requests
 function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Guests');
-
   try {
     const data = JSON.parse(e.postData.contents);
     const action = data.action;
 
     if (action === 'search') {
+      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Guests');
       return searchGuest(sheet, data.searchTerm);
     } else if (action === 'confirm') {
+      const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Guests');
       return confirmGuests(sheet, data.guests);
+    } else if (action === 'gift') {
+      const giftSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Gift Messages');
+      return saveGiftMessage(giftSheet, data);
     }
 
     return createResponse(false, 'Invalid action');
@@ -87,6 +90,41 @@ function confirmGuests(sheet, guests) {
     return createResponse(true, 'Conferma registrata con successo!');
   } catch (error) {
     return createResponse(false, 'Errore durante la conferma: ' + error.toString());
+  }
+}
+
+// Save gift message
+function saveGiftMessage(giftSheet, data) {
+  try {
+    // Create the sheet if it doesn't exist
+    if (!giftSheet) {
+      const spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+      giftSheet = spreadsheet.insertSheet('Gift Messages');
+
+      // Add headers
+      giftSheet.getRange(1, 1, 1, 4).setValues([
+        ['From', 'To', 'Message', 'Timestamp']
+      ]);
+
+      // Format headers
+      const headerRange = giftSheet.getRange(1, 1, 1, 4);
+      headerRange.setFontWeight('bold');
+      headerRange.setBackground('#f3f3f3');
+    }
+
+    const timestamp = new Date().toLocaleString('it-IT');
+
+    // Append the new gift message
+    giftSheet.appendRow([
+      data.from,
+      data.to,
+      data.message,
+      timestamp
+    ]);
+
+    return createResponse(true, 'Messaggio inviato con successo! Grazie!');
+  } catch (error) {
+    return createResponse(false, 'Errore durante l\'invio del messaggio: ' + error.toString());
   }
 }
 

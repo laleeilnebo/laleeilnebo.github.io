@@ -262,6 +262,134 @@ body {
     background: #f5f5f5;
 }
 
+/* Gift Section */
+.gift-section {
+    background: #fafafa;
+}
+
+.gift-message {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 2rem 0 3rem 0;
+    line-height: 2;
+    font-weight: 300;
+}
+
+.gift-link {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    background: transparent;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.gift-link:hover {
+    border-color: #1a1a1a;
+    background: transparent;
+}
+
+.gift-link p {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+    margin: 0;
+}
+
+.iban-display {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.iban-label {
+    font-size: 0.85rem;
+    color: #999;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+}
+
+.iban-number {
+    font-size: 1.2rem;
+    color: #1a1a1a;
+    font-weight: 400;
+    letter-spacing: 0.05rem;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+}
+
+.gift-form {
+    max-width: 450px;
+    margin: 2rem auto 0;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05rem;
+}
+
+.gift-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+    background: white;
+}
+
+.gift-input:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.gift-input:read-only {
+    background: #f9f9f9;
+    color: #999;
+    cursor: not-allowed;
+}
+
+.gift-textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+    background: white;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.gift-textarea:focus {
+    outline: none;
+    border-color: #1a1a1a;
+}
+
+.gift-submit-btn {
+    width: 100%;
+    margin-top: 1rem;
+}
+
 .rsvp-form {
     max-width: 450px;
     margin: 0 auto;

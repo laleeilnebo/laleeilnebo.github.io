@@ -93,6 +93,56 @@
         </div>
     </section>
 
+    <!-- Gift Section -->
+    <section class="info-section gift-section">
+        <div class="container">
+            <h2>Regalo</h2>
+            <div class="info-content">
+                <p class="gift-message">
+                    La vostra presenza è il regalo più grande.<br>
+                    Se desiderate contribuire al nostro viaggio di nozze,<br>
+                    Questo è il nostro IBAN.<br>
+                    Ricordatevi di lasciarci un messaggio in modo da potervi ringraziare personalmente!<br>
+                    Grazie 🫶🏻
+                </p>
+
+                <!-- IBAN Display -->
+                <div class="iban-display">
+                    <p class="iban-label">IBAN</p>
+                    <p class="iban-number">IT00 X000 0000 0000 0000 0000 000</p>
+                </div>
+
+                <!-- Gift Message Form -->
+                <div class="gift-form">
+                    <div class="form-group">
+                        <label for="giftFrom">Da:</label>
+                        <input type="text" id="giftFrom" class="gift-input" placeholder="Il tuo nome">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="giftTo">A:</label>
+                        <input type="text" id="giftTo" class="gift-input" value="Lorenzo ed Alessia" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="giftMessage">Un messaggio per gli sposi:</label>
+                        <textarea id="giftMessage" class="gift-textarea" rows="4" placeholder="Scrivi qui il tuo messaggio..."></textarea>
+                    </div>
+
+                    <button id="submitGiftBtn" class="rsvp-btn gift-submit-btn">Invia Messaggio</button>
+
+                    <!-- Loading Indicator -->
+                    <div id="giftLoadingIndicator" class="loading-indicator" style="display: none;">
+                        <p>Invio in corso...</p>
+                    </div>
+
+                    <!-- Success/Error Messages -->
+                    <div id="giftMessageBox" class="message-box" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer>
         <p>Non vediamo l'ora di condividere questo giorno speciale con voi!</p>
