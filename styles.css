@@ -444,6 +444,27 @@ body {
     color: #666;
 }
 
+.loading-indicator p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.loading-indicator p::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e0e0e0;
+    border-top-color: #1a1a1a;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 .guest-group {
     margin-top: 2rem;
     padding: 2rem;

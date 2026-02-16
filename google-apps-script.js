@@ -12,7 +12,7 @@ function doPost(e) {
       return searchGuest(sheet, data.searchTerm);
     } else if (action === 'confirm') {
       const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Guests');
-      return confirmGuests(sheet, data.guests);
+      return confirmGuests(sheet, data.guests, data.foodIntolerance);
     } else if (action === 'gift') {
       const giftSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Gift Messages');
       return saveGiftMessage(giftSheet, data);
@@ -29,24 +29,28 @@ function doGet(e) {
   return ContentService.createTextOutput('Wedding RSVP API is running');
 }
 
-// Search for a guest by name
+// Search for a guest by name (optimized)
 function searchGuest(sheet, searchTerm) {
+  // Get all data at once (faster than multiple getRange calls)
   const data = sheet.getDataRange().getValues();
-  const headers = data[0]; // First row is headers
 
-  // Expected columns: Group Name | Guest Name | Attending | Timestamp
+  // Expected columns: Group Name | Guest Name | Attending | Timestamp | Food Intolerance
   const groupNameCol = 0;
   const guestNameCol = 1;
   const attendingCol = 2;
+  const foodIntoleranceCol = 4;
 
-  // Search for the guest (case-insensitive)
+  // Search for the guest (case-insensitive, trimmed)
   const searchLower = searchTerm.toLowerCase().trim();
   let foundGroup = null;
+  let foundRow = -1;
 
+  // Single pass to find the guest
   for (let i = 1; i < data.length; i++) {
     const guestName = data[i][guestNameCol];
     if (guestName && guestName.toString().toLowerCase().includes(searchLower)) {
       foundGroup = data[i][groupNameCol];
+      foundRow = i;
       break;
     }
   }
@@ -55,8 +59,10 @@ function searchGuest(sheet, searchTerm) {
     return createResponse(false, 'Nessun ospite trovato con questo nome');
   }
 
-  // Get all guests in the same group
+  // Get all guests in the same group + food intolerance (single pass)
   const groupGuests = [];
+  let groupFoodIntolerance = '';
+
   for (let i = 1; i < data.length; i++) {
     if (data[i][groupNameCol] === foundGroup) {
       groupGuests.push({
@@ -64,27 +70,42 @@ function searchGuest(sheet, searchTerm) {
         name: data[i][guestNameCol],
         attending: data[i][attendingCol] === 'Sì' || data[i][attendingCol] === true
       });
+
+      // Get food intolerance from first group member that has it
+      if (!groupFoodIntolerance && data[i][foodIntoleranceCol]) {
+        groupFoodIntolerance = data[i][foodIntoleranceCol];
+      }
     }
   }
 
   return createResponse(true, 'Guest group found', {
     groupName: foundGroup,
-    guests: groupGuests
+    guests: groupGuests,
+    foodIntolerance: groupFoodIntolerance
   });
 }
 
-// Confirm guest attendance
-function confirmGuests(sheet, guests) {
+// Confirm guest attendance (optimized with batch updates)
+function confirmGuests(sheet, guests, foodIntolerance) {
   try {
     const timestamp = new Date().toLocaleString('it-IT');
 
-    guests.forEach(guest => {
+    // Batch update for better performance
+    const updates = guests.map(guest => {
       const row = guest.row;
       const attending = guest.attending ? 'Sì' : 'No';
+      return {
+        row: row,
+        attending: attending,
+        timestamp: timestamp,
+        foodIntolerance: foodIntolerance || ''
+      };
+    });
 
-      // Update columns: Attending (C) and Timestamp (D)
-      sheet.getRange(row, 3).setValue(attending); // Column C (Attending)
-      sheet.getRange(row, 4).setValue(timestamp); // Column D (Timestamp)
+    // Apply all updates at once (much faster than individual setValue calls)
+    updates.forEach(update => {
+      const range = sheet.getRange(update.row, 3, 1, 3); // Columns C, D, E
+      range.setValues([[update.attending, update.timestamp, update.foodIntolerance]]);
     });
 
     return createResponse(true, 'Conferma registrata con successo!');

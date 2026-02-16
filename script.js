@@ -62,7 +62,7 @@ function initRSVPForm() {
     console.log('=== RSVP Form Initialization Started ===');
 
     // Replace with your Google Apps Script Web App URL
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0hP2njaxIA0PVL0ML86wWzc2fc0UYPfzD_z4iuewsrhMyyHg3CvsDRVozCjWy9fvMTg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_rOMP1x-Z4bEkScAcTKrgdRy34zhK497gKGUTZc-L_RfgAdnbfRHuPQyjYEkcT0cjSQ/exec';
 
     const searchBtn = document.getElementById('searchBtn');
     const confirmBtn = document.getElementById('confirmBtn');
@@ -228,6 +228,12 @@ function initRSVPForm() {
             guestList.appendChild(guestItem);
         });
 
+        // Populate food intolerance field if it exists
+        const foodIntoleranceInput = document.getElementById('foodIntolerance');
+        if (foodIntoleranceInput && data.foodIntolerance) {
+            foodIntoleranceInput.value = data.foodIntolerance;
+        }
+
         showGuestGroup();
     }
 
@@ -239,13 +245,18 @@ function initRSVPForm() {
             attending: cb.checked
         }));
 
+        const foodIntoleranceInput = document.getElementById('foodIntolerance');
+        const foodIntolerance = foodIntoleranceInput ? foodIntoleranceInput.value.trim() : '';
+
         console.log('Confirming attendance for guests:', guests);
+        console.log('Food intolerance:', foodIntolerance);
         showLoading();
         hideMessage();
 
         const payload = {
             action: 'confirm',
-            guests: guests
+            guests: guests,
+            foodIntolerance: foodIntolerance
         };
 
         console.log('Sending confirmation to:', SCRIPT_URL);
@@ -274,6 +285,8 @@ function initRSVPForm() {
                     setTimeout(() => {
                         hideGuestGroup();
                         guestSearch.value = '';
+                        const foodIntoleranceInput = document.getElementById('foodIntolerance');
+                        if (foodIntoleranceInput) foodIntoleranceInput.value = '';
                         hideMessage();
                     }, 3000);
                 } else {
@@ -327,7 +340,7 @@ function initGiftForm() {
     console.log('=== Gift Form Initialization Started ===');
 
     // Replace with your Google Apps Script Web App URL (same as RSVP)
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz0hP2njaxIA0PVL0ML86wWzc2fc0UYPfzD_z4iuewsrhMyyHg3CvsDRVozCjWy9fvMTg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby_rOMP1x-Z4bEkScAcTKrgdRy34zhK497gKGUTZc-L_RfgAdnbfRHuPQyjYEkcT0cjSQ/exec';
 
     const submitGiftBtn = document.getElementById('submitGiftBtn');
     const giftFrom = document.getElementById('giftFrom');
