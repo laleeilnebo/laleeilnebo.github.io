@@ -134,7 +134,7 @@ body {
 .dinner-section {
     background: #fafafa;
     position: relative;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .dinner-photo {
@@ -142,6 +142,8 @@ body {
     overflow: hidden;
     border-radius: 3px;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.13);
+    opacity: 0.35;
+    filter: blur(1.5px);
 }
 
 .dinner-photo img {
@@ -151,28 +153,28 @@ body {
     object-fit: cover;
 }
 
-/* Top-left, bleeds into content */
+/* Top-left, overlaps content */
 .dinner-photo--1 {
     width: 170px;
     height: 250px;
     top: 12%;
-    left: calc(50% - 340px);
+    left: calc(50% - 220px);
 }
 
-/* Bottom-right, bleeds into content */
+/* Bottom-right, overlaps content */
 .dinner-photo--2 {
     width: 145px;
     height: 200px;
     bottom: 12%;
-    right: calc(50% - 310px);
+    right: calc(50% - 200px);
 }
 
-/* Top-right, higher, overlaps title area */
+/* Top-right, overlaps title area */
 .dinner-photo--3 {
     width: 155px;
     height: 225px;
     top: 8%;
-    right: calc(50% - 360px);
+    right: calc(50% - 230px);
 }
 
 .container {
