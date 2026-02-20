@@ -40,7 +40,7 @@ body {
 .hero-content {
     text-align: center;
     color: black;
-    transform: translateY(-5cm);
+    transform: translateY(-6cm);
     padding: 3rem 4rem;
 }
 
@@ -69,9 +69,10 @@ body {
 }
 
 .wedding-date {
-    font-size: 2rem;
-    font-weight: 350;
-    letter-spacing: 0.6rem;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.3rem;
     margin-bottom: 0;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
 }
@@ -614,8 +615,8 @@ footer {
     }
 
     .wedding-date {
-        font-size: 1.5rem;
-        letter-spacing: 0.3rem;
+        font-size: 1.8rem;
+        letter-spacing: 0.15rem;
     }
 
     .info-section {
@@ -719,8 +720,8 @@ footer {
     }
 
     .wedding-date {
-        font-size: 1.3rem;
-        letter-spacing: 0.25rem;
+        font-size: 1.6rem;
+        letter-spacing: 0.12rem;
     }
 
     .divider {
@@ -772,7 +773,8 @@ footer {
     }
 
     .wedding-date {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
+        letter-spacing: 0.15rem;
         margin-bottom: 1.5rem;
     }
 
