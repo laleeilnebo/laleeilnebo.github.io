@@ -40,7 +40,7 @@ body {
 .hero-content {
     text-align: center;
     color: black;
-    transform: translateY(-6cm);
+    transform: translateY(-5cm);
     padding: 3rem 4rem;
 }
 
