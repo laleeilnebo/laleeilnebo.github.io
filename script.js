@@ -68,6 +68,7 @@ function initRSVPForm() {
     const confirmBtn = document.getElementById('confirmBtn');
     const guestSearch = document.getElementById('guestSearch');
     const loadingIndicator = document.getElementById('loadingIndicator');
+    const confirmLoadingIndicator = document.getElementById('confirmLoadingIndicator');
     const guestGroup = document.getElementById('guestGroup');
     const messageBox = document.getElementById('messageBox');
 
@@ -76,6 +77,7 @@ function initRSVPForm() {
         confirmBtn: confirmBtn ? 'YES' : 'NO',
         guestSearch: guestSearch ? 'YES' : 'NO',
         loadingIndicator: loadingIndicator ? 'YES' : 'NO',
+        confirmLoadingIndicator: confirmLoadingIndicator ? 'YES' : 'NO',
         guestGroup: guestGroup ? 'YES' : 'NO',
         messageBox: messageBox ? 'YES' : 'NO'
     });
@@ -250,7 +252,7 @@ function initRSVPForm() {
 
         console.log('Confirming attendance for guests:', guests);
         console.log('Food intolerance:', foodIntolerance);
-        showLoading();
+        showConfirmLoading();
         hideMessage();
 
         const payload = {
@@ -278,7 +280,7 @@ function initRSVPForm() {
             try {
                 const data = JSON.parse(text);
                 console.log('Confirmation parsed data:', data);
-                hideLoading();
+                hideConfirmLoading();
                 if (data.success) {
                     showMessage(data.message, 'success');
                     // Reset form after successful submission
@@ -294,13 +296,13 @@ function initRSVPForm() {
                 }
             } catch (e) {
                 console.error('JSON parse error:', e);
-                hideLoading();
+                hideConfirmLoading();
                 showMessage('Errore nel formato della risposta', 'error');
             }
         })
         .catch(error => {
             console.error('Fetch error:', error);
-            hideLoading();
+            hideConfirmLoading();
             showMessage('Errore durante la conferma. Controlla la console per dettagli.', 'error');
         });
     }
@@ -314,6 +316,16 @@ function initRSVPForm() {
     function hideLoading() {
         loadingIndicator.style.display = 'none';
         searchBtn.disabled = false;
+    }
+
+    function showConfirmLoading() {
+        confirmLoadingIndicator.style.display = 'block';
+        confirmBtn.disabled = true;
+    }
+
+    function hideConfirmLoading() {
+        confirmLoadingIndicator.style.display = 'none';
+        confirmBtn.disabled = false;
     }
 
     function showGuestGroup() {
