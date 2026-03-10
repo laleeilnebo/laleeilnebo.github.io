@@ -132,9 +132,10 @@
                 </p>
 
                 <!-- IBAN Display -->
-                <div class="iban-display">
+                <div class="iban-display" id="ibanDisplay" onclick="copyIban()">
                     <p class="iban-label">IBAN</p>
-                    <p class="iban-number">IT00 X000 0000 0000 0000 0000 000</p>
+                    <p class="iban-number" id="ibanNumber">IT21X0301503200000005069119</p>
+                    <div class="iban-copied-popup" id="ibanCopiedPopup">Copiato!</div>
                 </div>
 
                 <!-- Gift Message Form -->
@@ -163,6 +164,80 @@
 
                     <!-- Success/Error Messages -->
                     <div id="giftMessageBox" class="message-box" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="info-section gallery-section">
+        <div class="container gallery-container">
+            <div class="gallery-slideshow">
+                <div class="slideshow-container">
+                    <div class="slide active">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23.jpeg" alt="Foto 1">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23-2.jpeg" alt="Foto 2">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23-3.jpeg" alt="Foto 3">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23-4.jpeg" alt="Foto 4">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23-5.jpeg" alt="Foto 5">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23-6.jpeg" alt="Foto 6">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.23-7.jpeg" alt="Foto 7">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.15.24.jpeg" alt="Foto 8">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.26.51 (1).jpeg" alt="Foto 9">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.26.51 (2).jpeg" alt="Foto 10">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.26.51 (3).jpeg" alt="Foto 11">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.26.51 (4).jpeg" alt="Foto 12">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.26.51 (5).jpeg" alt="Foto 13">
+                    </div>
+                    <div class="slide">
+                        <img src="./images/Gallery/WhatsApp Image 2026-03-09 at 23.26.51.jpeg" alt="Foto 14">
+                    </div>
+
+                    <!-- Navigation Arrows -->
+                    <button class="slide-btn prev" onclick="changeSlide(-1)">&#10094;</button>
+                    <button class="slide-btn next" onclick="changeSlide(1)">&#10095;</button>
+                </div>
+
+                <!-- Dots Navigation -->
+                <div class="dots-container">
+                    <span class="dot active" onclick="goToSlide(0)"></span>
+                    <span class="dot" onclick="goToSlide(1)"></span>
+                    <span class="dot" onclick="goToSlide(2)"></span>
+                    <span class="dot" onclick="goToSlide(3)"></span>
+                    <span class="dot" onclick="goToSlide(4)"></span>
+                    <span class="dot" onclick="goToSlide(5)"></span>
+                    <span class="dot" onclick="goToSlide(6)"></span>
+                    <span class="dot" onclick="goToSlide(7)"></span>
+                    <span class="dot" onclick="goToSlide(8)"></span>
+                    <span class="dot" onclick="goToSlide(9)"></span>
+                    <span class="dot" onclick="goToSlide(10)"></span>
+                    <span class="dot" onclick="goToSlide(11)"></span>
+                    <span class="dot" onclick="goToSlide(12)"></span>
+                    <span class="dot" onclick="goToSlide(13)"></span>
                 </div>
             </div>
         </div>

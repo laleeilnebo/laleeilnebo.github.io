@@ -340,6 +340,18 @@ body {
     border-radius: 8px;
     margin: 2rem 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.iban-display:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.iban-display:active {
+    transform: translateY(0);
 }
 
 .iban-label {
@@ -358,6 +370,29 @@ body {
     letter-spacing: 0.05rem;
     margin: 0;
     font-family: 'Courier New', monospace;
+}
+
+.iban-copied-popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: #1a1a1a;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.iban-copied-popup.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
 }
 
 .gift-form {
@@ -579,6 +614,122 @@ body {
     border: 1px solid #f5c6cb;
 }
 
+/* Gallery Section */
+.gallery-section {
+    background: #ffffff;
+    padding: 8rem 2rem;
+}
+
+.gallery-container {
+    max-width: 900px;
+}
+
+.gallery-slideshow {
+    margin-top: 3rem;
+}
+
+.slideshow-container {
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #f5f5f5;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide {
+    display: none;
+    width: 100%;
+    max-height: 70vh;
+}
+
+.slide.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide img {
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+}
+
+.slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.9);
+    color: #1a1a1a;
+    border: none;
+    font-size: 1.5rem;
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    border-radius: 4px;
+}
+
+.slide-btn:hover {
+    background: rgba(255, 255, 255, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slide-btn.prev {
+    left: 1rem;
+}
+
+.slide-btn.next {
+    right: 1rem;
+}
+
+.slide-counter {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1rem;
+    color: #666;
+    font-weight: 300;
+    letter-spacing: 0.05rem;
+}
+
+.dots-container {
+    text-align: center;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    background-color: #ddd;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dot:hover {
+    background-color: #999;
+}
+
+.dot.active {
+    background-color: #1a1a1a;
+    width: 12px;
+    height: 12px;
+}
+
 /* Footer */
 footer {
     background: #1a1a1a;
@@ -700,6 +851,35 @@ footer {
     .dinner-content-half {
         padding: 3rem 1.5rem;
     }
+
+    .gallery-section {
+        padding: 5rem 1.5rem;
+    }
+
+    .slideshow-container {
+        min-height: 300px;
+    }
+
+    .slide {
+        max-height: 60vh;
+    }
+
+    .slide img {
+        max-height: 60vh;
+    }
+
+    .slide-btn {
+        font-size: 1.2rem;
+        padding: 0.75rem 1rem;
+    }
+
+    .slide-btn.prev {
+        left: 0.5rem;
+    }
+
+    .slide-btn.next {
+        right: 0.5rem;
+    }
 }
 
 /* Extra small devices (phones in portrait, less than 576px) */
@@ -745,6 +925,37 @@ footer {
     .guest-input {
         padding: 0.875rem 1rem;
         font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .slideshow-container {
+        min-height: 250px;
+    }
+
+    .slide {
+        max-height: 50vh;
+    }
+
+    .slide img {
+        max-height: 50vh;
+    }
+
+    .slide-btn {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .dots-container {
+        gap: 0.4rem;
+    }
+
+    .dot {
+        height: 8px;
+        width: 8px;
+    }
+
+    .dot.active {
+        width: 10px;
+        height: 10px;
     }
 }
 

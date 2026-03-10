@@ -472,3 +472,122 @@ function initGiftForm() {
 
     console.log('=== Gift Form Initialization Completed ===');
 }
+
+// IBAN Copy Function
+function copyIban() {
+    const ibanNumber = document.getElementById('ibanNumber').textContent;
+    const popup = document.getElementById('ibanCopiedPopup');
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(ibanNumber).then(function() {
+        // Show popup
+        popup.classList.add('show');
+
+        // Hide popup after 2 seconds
+        setTimeout(function() {
+            popup.classList.remove('show');
+        }, 2000);
+    }).catch(function(err) {
+        console.error('Failed to copy IBAN:', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = ibanNumber;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            // Show popup
+            popup.classList.add('show');
+            setTimeout(function() {
+                popup.classList.remove('show');
+            }, 2000);
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+        }
+        document.body.removeChild(textArea);
+    });
+}
+
+// Gallery Slideshow Functions
+let currentSlideIndex = 0;
+
+function changeSlide(direction) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    // Remove active class from current slide and dot
+    slides[currentSlideIndex].classList.remove('active');
+    dots[currentSlideIndex].classList.remove('active');
+
+    // Update index
+    currentSlideIndex += direction;
+
+    // Loop around if at the end or beginning
+    if (currentSlideIndex >= slides.length) {
+        currentSlideIndex = 0;
+    } else if (currentSlideIndex < 0) {
+        currentSlideIndex = slides.length - 1;
+    }
+
+    // Add active class to new slide and dot
+    slides[currentSlideIndex].classList.add('active');
+    dots[currentSlideIndex].classList.add('active');
+}
+
+function goToSlide(index) {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+
+    // Remove active class from current slide and dot
+    slides[currentSlideIndex].classList.remove('active');
+    dots[currentSlideIndex].classList.remove('active');
+
+    // Update index
+    currentSlideIndex = index;
+
+    // Add active class to new slide and dot
+    slides[currentSlideIndex].classList.add('active');
+    dots[currentSlideIndex].classList.add('active');
+}
+
+// Add keyboard navigation for slideshow
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowLeft') {
+        changeSlide(-1);
+    } else if (e.key === 'ArrowRight') {
+        changeSlide(1);
+    }
+});
+
+// Add touch swipe support for mobile
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('DOMContentLoaded', function() {
+    const slideshowContainer = document.querySelector('.slideshow-container');
+
+    if (slideshowContainer) {
+        slideshowContainer.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slideshowContainer.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                // Swiped left, go to next slide
+                changeSlide(1);
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                // Swiped right, go to previous slide
+                changeSlide(-1);
+            }
+        }
+    }
+});
