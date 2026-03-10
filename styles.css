@@ -668,20 +668,20 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.9);
+    background: transparent;
     color: #1a1a1a;
     border: none;
-    font-size: 1.5rem;
-    padding: 1rem 1.2rem;
+    font-size: 2rem;
+    padding: 0.5rem;
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
-    border-radius: 4px;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
 }
 
 .slide-btn:hover {
-    background: rgba(255, 255, 255, 1);
-    transform: translateY(-50%) scale(1.1);
+    transform: translateY(-50%) scale(1.2);
+    color: #333;
 }
 
 .slide-btn.prev {
@@ -869,8 +869,8 @@ footer {
     }
 
     .slide-btn {
-        font-size: 1.2rem;
-        padding: 0.75rem 1rem;
+        font-size: 1.8rem;
+        padding: 0.5rem;
     }
 
     .slide-btn.prev {
@@ -940,8 +940,8 @@ footer {
     }
 
     .slide-btn {
-        font-size: 1rem;
-        padding: 0.5rem 0.75rem;
+        font-size: 1.5rem;
+        padding: 0.5rem;
     }
 
     .dots-container {
