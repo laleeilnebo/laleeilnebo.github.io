@@ -563,31 +563,39 @@ document.addEventListener('keydown', function(e) {
 
 // Add touch swipe support for mobile
 let touchStartX = 0;
+let touchStartY = 0;
 let touchEndX = 0;
+let isHorizontalSwipe = false;
 
 document.addEventListener('DOMContentLoaded', function() {
     const slideshowContainer = document.querySelector('.slideshow-container');
 
     if (slideshowContainer) {
         slideshowContainer.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-        });
+            touchStartX = e.changedTouches[0].clientX;
+            touchStartY = e.changedTouches[0].clientY;
+            isHorizontalSwipe = false;
+        }, { passive: true });
+
+        slideshowContainer.addEventListener('touchmove', function(e) {
+            const dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+            const dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+            if (dx > dy) {
+                // Horizontal swipe: lock vertical scroll
+                isHorizontalSwipe = true;
+                e.preventDefault();
+            }
+        }, { passive: false });
 
         slideshowContainer.addEventListener('touchend', function(e) {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
+            if (!isHorizontalSwipe) return;
+            touchEndX = e.changedTouches[0].clientX;
             const swipeThreshold = 50;
             if (touchEndX < touchStartX - swipeThreshold) {
-                // Swiped left, go to next slide
                 changeSlide(1);
-            }
-            if (touchEndX > touchStartX + swipeThreshold) {
-                // Swiped right, go to previous slide
+            } else if (touchEndX > touchStartX + swipeThreshold) {
                 changeSlide(-1);
             }
-        }
+        }, { passive: true });
     }
 });

@@ -363,6 +363,13 @@ body {
     text-transform: uppercase;
 }
 
+.iban-holders {
+    font-size: 1.05rem;
+    color: #1a1a1a;
+    font-weight: 400;
+    margin-bottom: 1.2rem;
+}
+
 .iban-number {
     font-size: 1.2rem;
     color: #1a1a1a;
@@ -612,6 +619,28 @@ body {
     background: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
+}
+
+/* Welcome Section */
+.welcome-section {
+    background: #ffffff;
+    padding: 5rem 2rem;
+    text-align: center;
+}
+
+.welcome-text {
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 300;
+    line-height: 2;
+    margin-bottom: 2rem;
+}
+
+.welcome-scroll {
+    font-size: 1rem;
+    color: #666;
+    font-weight: 300;
+    letter-spacing: 0.1rem;
 }
 
 /* Gallery Section */
