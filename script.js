@@ -62,7 +62,7 @@ function initRSVPForm() {
     console.log('=== RSVP Form Initialization Started ===');
 
     // Replace with your Google Apps Script Web App URL
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAADbHBFHNGLvApfTHsyvW6TLKxCVx64xq5aG94alNNxhPWhwli8pf-7DkXksubDjY0w/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwq1j8_Lpsx4H-KkbAFoPDtPbD4b2KYCmS_Sou485ZRLnSUrt3XlJNGO5CMX8XDyCl4Sg/exec';
 
     const searchBtn = document.getElementById('searchBtn');
     const confirmBtn = document.getElementById('confirmBtn');
